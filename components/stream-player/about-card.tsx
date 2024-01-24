@@ -1,5 +1,6 @@
 "use client"
 
+import { BioModal } from "./bio-modal";
 import { VerifiedMark } from "./verified-mark";
 
 interface AboutCardProps {
@@ -29,7 +30,9 @@ export const AboutCard = ({
                         <VerifiedMark />
                     </div>
                     {isHost && (
-                        <p>EDIT</p>
+                        <BioModal 
+                            initialValue={bio}
+                        />
                     )}
                 </div>
                 <div className="text-sm text-muted-foreground">
