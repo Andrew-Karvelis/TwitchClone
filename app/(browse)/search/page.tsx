@@ -1,28 +1,28 @@
-import { redirect } from "next/dist/server/api-utils";
-import { Results, ResultsSkeleton } from "./_components/results";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
+
+import { Results, ResultsSkeleton } from "./_components/results";
 
 interface SearchPageProps {
-    searchParams: {
-        term?: string;
-    }
-}
+  searchParams: {
+    term?: string;
+  };
+};
 
 const SearchPage = ({
-    searchParams,
+  searchParams,
 }: SearchPageProps) => {
+  if (!searchParams.term) {
+    redirect("/");
+  }
 
-    if (!searchParams.term) {
-        redirect("/");
-    }
-
-    return (
-        <div className="h-full p-8 max-w-screen-2xl mx-auto">
-            <Suspense fallback={<ResultsSkeleton />}>
-                <Results term={searchParams.term}/>
-            </Suspense>
-        </div>
-    )
-}
-
+  return ( 
+    <div className="h-full p-8 max-w-screen-2xl mx-auto">
+      <Suspense fallback={<ResultsSkeleton />}>
+        <Results term={searchParams.term} />
+      </Suspense>
+    </div>
+  );
+};
+ 
 export default SearchPage;
