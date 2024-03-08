@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 import { useTransition } from "react";
 
-import { onUnBlock } from "@/actions/block";
+import { onUnblock } from "@/actions/block";
 import { Button } from "@/components/ui/button";
 
 interface UnblockButtonProps {
@@ -17,7 +17,7 @@ export const UnblockButton = ({
 
   const onClick = () => {
     startTransition(() => {
-        onUnBlock(userId)
+        onUnblock(userId)
         .then((result) => toast.success(`User ${result.blocked.username} unblocked`))
         .catch(() => toast.error("Something went wrong"))
     });

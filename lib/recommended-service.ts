@@ -3,6 +3,7 @@ import { getSelf } from "@/lib/auth-service";
 
 export const getRecommended = async () => {
   let userId;
+
   try {
     const self = await getSelf();
     userId = self.id;
@@ -41,17 +42,24 @@ export const getRecommended = async () => {
           },
         ],
       },
-      include :{
+      include: {
         stream: {
           select: {
             isLive: true,
           },
         },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+      orderBy: [
+        {
+          stream: {
+            isLive: "desc",
+          }
+        },
+        {
+          createdAt: "desc"
+        },
+      ]
+    })
   } else {
     users = await db.user.findMany({
       include: {
@@ -61,10 +69,18 @@ export const getRecommended = async () => {
           },
         },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: [
+        {
+          stream: {
+            isLive: "desc",
+          }
+        },
+        {
+          createdAt: "desc"
+        },
+      ]
     });
   }
+
   return users;
 };
